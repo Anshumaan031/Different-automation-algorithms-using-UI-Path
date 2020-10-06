@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="514,2162" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="390,642" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="21">
+    <scg:List x:TypeArguments="x:String" Capacity="23">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -22,10 +22,12 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Vision.OCR</x:String>
+      <x:String>UiPath.OCR.Contracts</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="15">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="17">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -41,129 +43,30 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="474,2082" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="scanned pdf text can be read using OCR&#xD;&#xA;" DisplayName="scanned pdf" sap:VirtualizedContainerService.HintSize="376,437" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="s:String[]" Name="pdffiles" />
-      <Variable x:TypeArguments="x:String" Default="input" Name="path" />
-      <Variable x:TypeArguments="ui:GenericValue" Name="counter" />
+      <Variable x:TypeArguments="x:String" Name="scannedtext" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="452,60" sap2010:WorkflowViewState.IdRef="Assign_1">
-      <Assign.To>
-        <OutArgument x:TypeArguments="s:String[]">[pdffiles]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles(path,"*.pdf")]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="452,60" sap2010:WorkflowViewState.IdRef="Assign_6">
-      <Assign.To>
-        <OutArgument x:TypeArguments="ui:GenericValue">[counter]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="ui:GenericValue">[2]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="452,1758" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[pdffiles]">
-      <ui:ForEach.Body>
-        <ActivityAction x:TypeArguments="x:Object">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="436,1623" sap2010:WorkflowViewState.IdRef="Sequence_2">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="pdf2text" />
-              <Variable x:TypeArguments="ui:GenericValue" Name="email" />
-              <Variable x:TypeArguments="ui:GenericValue" Name="from" />
-              <Variable x:TypeArguments="ui:GenericValue" Name="fromto" />
-              <Variable x:TypeArguments="ui:GenericValue" Name="client" />
-              <Variable x:TypeArguments="x:String" Default="output/invoices.xlsx" Name="excelpath" />
-              <Variable x:TypeArguments="ui:GenericValue" Name="total" />
-            </Sequence.Variables>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadPDFText DisplayName="Read PDF Text" FileName="[item.ToString]" sap:VirtualizedContainerService.HintSize="414,59" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[pdf2text]" />
-            <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="414,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[pdf2text]" TopMost="True" />
-            <Assign sap:VirtualizedContainerService.HintSize="414,60" sap2010:WorkflowViewState.IdRef="Assign_2">
-              <Assign.To>
-                <OutArgument x:TypeArguments="ui:GenericValue">[email]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="ui:GenericValue">[Split(pdf2text,Environment.NewLine)(4)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign sap:VirtualizedContainerService.HintSize="414,60" sap2010:WorkflowViewState.IdRef="Assign_3">
-              <Assign.To>
-                <OutArgument x:TypeArguments="ui:GenericValue">[fromto]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="ui:GenericValue">[Split(pdf2text,Environment.NewLine)(3)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign sap:VirtualizedContainerService.HintSize="414,60" sap2010:WorkflowViewState.IdRef="Assign_4">
-              <Assign.To>
-                <OutArgument x:TypeArguments="ui:GenericValue">[from]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="ui:GenericValue">[split(fromto," ")(0)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign sap:VirtualizedContainerService.HintSize="414,60" sap2010:WorkflowViewState.IdRef="Assign_5">
-              <Assign.To>
-                <OutArgument x:TypeArguments="ui:GenericValue">[client]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="ui:GenericValue">[split(fromto," ")(1)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign sap:VirtualizedContainerService.HintSize="414,60" sap2010:WorkflowViewState.IdRef="Assign_8">
-              <Assign.To>
-                <OutArgument x:TypeArguments="ui:GenericValue">[total]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="ui:GenericValue">[Split(pdf2text,Environment.NewLine)(17)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="414,801" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="[excelpath]">
-              <ui:ExcelApplicationScope.Body>
-                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
-                  <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
-                  </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="336,692" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <ui:ExcelWriteCell Cell="[&quot;A&quot;+counter.ToString]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="Sheet1" Text="[from]" />
-                    <ui:ExcelWriteCell Cell="[&quot;B&quot;+counter]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="Sheet1" Text="[client]" />
-                    <ui:ExcelWriteCell Cell="[&quot;C&quot;+counter]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="Sheet1" Text="[email]" />
-                    <ui:ExcelWriteCell Cell="[&quot;G&quot;+counter]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_4" SheetName="Sheet1" Text="[total]" />
-                    <Assign sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_7">
-                      <Assign.To>
-                        <OutArgument x:TypeArguments="ui:GenericValue">[counter]</OutArgument>
-                      </Assign.To>
-                      <Assign.Value>
-                        <InArgument x:TypeArguments="ui:GenericValue">[counter+1]</InArgument>
-                      </Assign.Value>
-                    </Assign>
-                  </Sequence>
-                </ActivityAction>
-              </ui:ExcelApplicationScope.Body>
-            </ui:ExcelApplicationScope>
-          </Sequence>
-        </ActivityAction>
-      </ui:ForEach.Body>
-    </ui:ForEach>
+    <ui:ReadPDFWithOCR DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="C:\Users\anshuman\Desktop\scansmpl.pdf" sap:VirtualizedContainerService.HintSize="334,131" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="150" Range="All" Text="[scannedtext]">
+      <ui:ReadPDFWithOCR.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+          <ui:MicrosoftOCR FilterRegion="{x:Null}" Language="{x:Null}" Output="{x:Null}" Profile="{x:Null}" Scale="{x:Null}" Text="{x:Null}" ComputeSkewAngle="False" DisplayName="Microsoft OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="MicrosoftOCR_1" Image="[Image]" />
+        </ActivityFunc>
+      </ui:ReadPDFWithOCR.OCREngine>
+    </ui:ReadPDFWithOCR>
+    <ui:WriteTextFile DisplayName="Write Text File" FileName="scannedpdf.txt" sap:VirtualizedContainerService.HintSize="334,132" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[scannedtext]" />
   </Sequence>
 </Activity>
